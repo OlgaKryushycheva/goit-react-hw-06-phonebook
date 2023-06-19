@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {
   Label,
   Form,
@@ -9,6 +9,8 @@ import {
   Field,
   Btn,
 } from '../Styles/StyleForm.styled';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
 
 const phoneRegExp = /[+3][0-9]{12}$/;
 
@@ -22,7 +24,9 @@ const ContactSchema = Yup.object().shape({
     .required('Заполните это поле'),
 });
 
-export const ContactForm = ({ onAddContact }) => {
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+
   return (
     <Formik
       initialValues={{
@@ -31,10 +35,14 @@ export const ContactForm = ({ onAddContact }) => {
       }}
       validationSchema={ContactSchema}
       onSubmit={(values, actions) => {
-        onAddContact({
+        console.log(values);
+
+        const contact = {
           ...values,
           id: nanoid(),
-        });
+        };
+
+        dispatch(addContact(contact));
         actions.resetForm();
       }}
     >
@@ -57,6 +65,41 @@ export const ContactForm = ({ onAddContact }) => {
   );
 };
 
-ContactForm.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
-};
+// export const ContactForm = ({ onAddContact }) => {
+//   return (
+//     <Formik
+//       initialValues={{
+//         name: '',
+//         number: '',
+//       }}
+//       validationSchema={ContactSchema}
+//       onSubmit={(values, actions) => {
+//         onAddContact({
+//           ...values,
+//           id: nanoid(),
+//         });
+//         actions.resetForm();
+//       }}
+//     >
+//       <Form>
+//         <Label>
+//           Name
+//           <Field name="name" type="text" />
+//           <ErrorMessage name="name" component={'span'} />
+//         </Label>
+
+//         <Label>
+//           Number
+//           <Field name="number" type="tel" />
+//           <ErrorMessage name="number" component={'span'} />
+//         </Label>
+
+//         <Btn type="submit">Add contact</Btn>
+//       </Form>
+//     </Formik>
+//   );
+// };
+
+// ContactForm.propTypes = {
+//   onAddContact: PropTypes.func.isRequired,
+// };
