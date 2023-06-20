@@ -23,9 +23,9 @@ export function App() {
   //   }
   // };
 
-  const deliteContact = contactId => {
-    setContacts(contacts.filter(contact => contact.id !== contactId));
-  };
+  // const deliteContact = contactId => {
+  //   setContacts(contacts.filter(contact => contact.id !== contactId));
+  // };
 
   const changeFilter = evt => {
     setFilter(evt.currentTarget.value);
@@ -46,7 +46,7 @@ export function App() {
       <Filter onChange={changeFilter} value={filter} />
 
       <TitleContact>Contacts</TitleContact>
-      <ContactList removeContact={deliteContact} />
+      <ContactList />
     </Container>
   );
 }

@@ -2,18 +2,25 @@
 import { ContactItem } from './ContactItem';
 import { List } from 'Styles/StyleForm.styled';
 import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { getContacts, getFilter } from 'redux/selectors';
 
-export const ContactList = ({ removeContact }) => {
+export const ContactList = () => {
   const contacts = useSelector(getContacts);
+  // console.log(contacts);
+  const filter = useSelector(getFilter);
+  // console.log(filter);
+
+  const filterContact = contacts.filter(contact =>
+    contact.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+  );
 
   return (
     <List>
-      {contacts.map(contact => (
+      {filterContact.map(contact => (
         <ContactItem
           key={contact.id}
           contact={contact}
-          removeContact={removeContact}
+          // removeContact={removeContact}
         />
       ))}
     </List>
