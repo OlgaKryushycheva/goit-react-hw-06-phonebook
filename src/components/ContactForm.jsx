@@ -1,7 +1,6 @@
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { nanoid } from 'nanoid';
-// import PropTypes from 'prop-types';
 import {
   Label,
   Form,
@@ -35,8 +34,6 @@ export const ContactForm = () => {
       }}
       validationSchema={ContactSchema}
       onSubmit={(values, actions) => {
-        // console.log(values);
-
         const contact = {
           ...values,
           id: nanoid(),
@@ -64,42 +61,3 @@ export const ContactForm = () => {
     </Formik>
   );
 };
-
-// export const ContactForm = ({ onAddContact }) => {
-//   return (
-//     <Formik
-//       initialValues={{
-//         name: '',
-//         number: '',
-//       }}
-//       validationSchema={ContactSchema}
-//       onSubmit={(values, actions) => {
-//         onAddContact({
-//           ...values,
-//           id: nanoid(),
-//         });
-//         actions.resetForm();
-//       }}
-//     >
-//       <Form>
-//         <Label>
-//           Name
-//           <Field name="name" type="text" />
-//           <ErrorMessage name="name" component={'span'} />
-//         </Label>
-
-//         <Label>
-//           Number
-//           <Field name="number" type="tel" />
-//           <ErrorMessage name="number" component={'span'} />
-//         </Label>
-
-//         <Btn type="submit">Add contact</Btn>
-//       </Form>
-//     </Formik>
-//   );
-// };
-
-// ContactForm.propTypes = {
-//   onAddContact: PropTypes.func.isRequired,
-// };

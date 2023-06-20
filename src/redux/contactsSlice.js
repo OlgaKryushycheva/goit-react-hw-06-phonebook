@@ -13,17 +13,13 @@ const contactsSlice = createSlice({
       if (isExist) {
         alert(`${action.payload.name} ia already in contacts`);
       } else {
-        // setContacts([newContact, ...contacts]);
         state.unshift(action.payload);
       }
-      //   state.unshift(action.payload);
-      console.log(action.payload);
     },
 
     deliteContact(state, action) {
       const index = state.findIndex(contact => contact.id === action.payload);
       state.splice(index, 1);
-      //   console.log(action.payload);
     },
   },
 });
