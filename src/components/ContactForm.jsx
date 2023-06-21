@@ -8,8 +8,9 @@ import {
   Field,
   Btn,
 } from '../Styles/StyleForm.styled';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
+import { getContacts } from 'redux/selectors';
 
 const phoneRegExp = /[+3][0-9]{12}$/;
 
@@ -25,6 +26,7 @@ const ContactSchema = Yup.object().shape({
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
 
   return (
     <Formik
@@ -34,12 +36,18 @@ export const ContactForm = () => {
       }}
       validationSchema={ContactSchema}
       onSubmit={(values, actions) => {
-        const contact = {
+        const newContact = {
           ...values,
           id: nanoid(),
         };
 
-        dispatch(addContact(contact));
+        const isExist = contacts.find(contact => contact.name === values.name);
+        if (isExist) {
+          alert(`${values.name} ia already in contacts`);
+        } else {
+          dispatch(addContact(newContact));
+        }
+
         actions.resetForm();
       }}
     >
